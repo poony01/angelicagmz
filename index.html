@@ -9,11 +9,12 @@
     body {
       margin: 0;
       padding: 0;
-      background-image: url('background.jpg');
+      background-image: url('background.jpg'); /* certifique-se de que sua imagem se chama background.jpg */
       background-size: cover;
       background-position: center;
       height: 100vh;
       font-family: Arial, sans-serif;
+      position: relative;
     }
 
     .overlay {
@@ -23,6 +24,7 @@
       position: absolute;
       top: 0;
       left: 0;
+      z-index: 1;
     }
 
     .content {
@@ -35,6 +37,7 @@
       align-items: center;
       color: white;
       text-align: center;
+      padding: 20px;
     }
 
     .content h1 {
@@ -46,6 +49,7 @@
       display: flex;
       gap: 20px;
       flex-wrap: wrap;
+      justify-content: center;
     }
 
     .button-container a {
@@ -62,10 +66,31 @@
       background-color: #c2185b;
     }
 
+    .social-footer {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      z-index: 3;
+    }
+
+    .social-footer a img {
+      width: 40px;
+      height: 40px;
+      margin: 0 10px;
+      filter: brightness(0) invert(1); /* deixa os ícones brancos */
+      transition: transform 0.3s;
+    }
+
+    .social-footer a:hover img {
+      transform: scale(1.2);
+    }
+
     @media (max-width: 600px) {
       .content h1 {
         font-size: 2em;
       }
+
       .button-container {
         flex-direction: column;
       }
@@ -74,6 +99,7 @@
 </head>
 <body>
   <div class="overlay"></div>
+
   <div class="content">
     <h1>Bem-vindo(a) ao site Angelica GMZ 💖</h1>
     <div class="button-container">
@@ -81,5 +107,14 @@
       <a href="register.html">Criar Conta</a>
     </div>
   </div>
+
+  <footer class="social-footer">
+    <a href="https://www.instagram.com/angelica__gmss" target="_blank" title="Instagram">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/instagram/instagram-original.svg" alt="Instagram" />
+    </a>
+    <a href="https://t.me/AngelicaaGMZ" target="_blank" title="Telegram">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" />
+    </a>
+  </footer>
 </body>
 </html>
