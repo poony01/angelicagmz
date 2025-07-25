@@ -2,30 +2,36 @@ import fs from 'fs';
 import path from 'path';
 
 export default function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).end();
+  if (req.method === 'POST') {
+    const { name, email, phone, password } = req.body;
 
-  const usersPath = path.resolve('users.json');
-  const { name, email, phone, password } = req.body;
+    if (!name || !email || !phone || !password) {
+      return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
+    }
 
-  const users = fs.existsSync(usersPath)
-    ? JSON.parse(fs.readFileSync(usersPath))
-    : [];
+    const filePath = path.resolve(process.cwd(), 'users.json');
+    let users = [];
 
-  const userExists = users.some(user => user.email === email);
-  if (userExists) return res.status(400).json({ message: 'E-mail já registrado.' });
+    if (fs.existsSync(filePath)) {
+      const fileData = fs.readFileSync(filePath, 'utf-8');
+      try {
+        users = JSON.parse(fileData);
+      } catch (err) {
+        console.error('Erro ao ler JSON:', err);
+      }
+    }
 
-  const newUser = {
-    id: Date.now(),
-    name,
-    email,
-    phone,
-    password,
-    isAdmin: false,
-    isPaid: false
-  };
+    const emailExistente = users.find(user => user.email === email);
+    if (emailExistente) {
+      return res.status(400).json({ message: 'E-mail já cadastrado.' });
+    }
 
-  users.push(newUser);
-  fs.writeFileSync(usersPath, JSON.stringify(users, null, 2));
+    const novoUsuario = { name, email, phone, password, isAdmin: false, plano: null, dataPlano: null };
+    users.push(novoUsuario);
 
-  res.status(200).json({ message: 'Conta criada com sucesso.' });
+    fs.writeFileSync(filePath, JSON.stringify(users, null, 2));
+    return res.status(200).json({ message: 'Cadastro realizado com sucesso!' });
+  }
+
+  return res.status(405).json({ message: 'Método não permitido.' });
 }
