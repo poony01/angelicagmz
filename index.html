@@ -1,0 +1,36 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Angelica GMZ - Acesso Privado</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="form-box">
+      <h2 id="form-title">Criar Conta</h2>
+      <form id="registerForm">
+        <input type="text" name="name" placeholder="Seu nome" required />
+        <input type="email" name="email" placeholder="E-mail" required />
+        <input type="tel" name="phone" placeholder="Celular" required />
+        <input type="password" name="password" placeholder="Senha" required />
+        <button type="submit">Registrar</button>
+      </form>
+
+      <form id="loginForm" style="display:none;">
+        <input type="email" name="email" placeholder="E-mail" required />
+        <input type="password" name="password" placeholder="Senha" required />
+        <button type="submit">Entrar</button>
+      </form>
+
+      <p id="toggle-form">Já tem conta? <a href="#">Entrar</a></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="registerForm.js"></script>
+  <script src="loginForm.js"></script>
+</body>
+</html>
