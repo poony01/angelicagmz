@@ -1,43 +1,43 @@
-/* css/style.css */
-body {
+body, html {
   margin: 0;
   padding: 0;
-  background-size: cover;
-  background-position: center;
-  font-family: Arial, sans-serif;
+  height: 100%;
+  font-family: 'Arial', sans-serif;
   color: white;
 }
 
-.container {
-  background: rgba(0, 0, 0, 0.6);
-  padding: 40px;
-  margin: 100px auto;
-  width: 90%;
-  max-width: 400px;
+.overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  border-radius: 10px;
 }
 
-.title {
-  font-size: 32px;
-  margin-bottom: 20px;
+.site-name {
+  font-size: 42px;
+  margin-bottom: 40px;
+  font-weight: bold;
 }
 
-.socials a {
-  display: block;
-  margin: 10px 0;
-  font-size: 18px;
-  text-decoration: none;
-  color: #fff;
-}
-
-.actions .btn {
-  display: block;
-  margin: 20px auto;
-  padding: 12px;
-  background: #ff0066;
+.buttons .btn {
+  display: inline-block;
+  margin: 10px;
+  padding: 14px 28px;
+  font-size: 16px;
   color: white;
   text-decoration: none;
-  border-radius: 8px;
-  font-weight: bold;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.insta { background-color: #E1306C; }
+.telegram { background-color: #0088cc; }
+.login { background-color: #555; }
+.register { background-color: #28a745; }
+
+.btn:hover {
+  opacity: 0.8;
 }
