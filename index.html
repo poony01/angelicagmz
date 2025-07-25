@@ -4,33 +4,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Angelica GMZ - Acesso Privado</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Angelica GMZ</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url('background.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6); /* escurece a imagem */
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+    }
+
+    .content h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .button-container a {
+      padding: 15px 30px;
+      background-color: #e91e63;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 1.1em;
+      transition: 0.3s;
+    }
+
+    .button-container a:hover {
+      background-color: #c2185b;
+    }
+
+    @media (max-width: 600px) {
+      .content h1 {
+        font-size: 2em;
+      }
+      .button-container {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <div class="form-box">
-      <h2 id="form-title">Criar Conta</h2>
-      <form id="registerForm">
-        <input type="text" name="name" placeholder="Seu nome" required />
-        <input type="email" name="email" placeholder="E-mail" required />
-        <input type="tel" name="phone" placeholder="Celular" required />
-        <input type="password" name="password" placeholder="Senha" required />
-        <button type="submit">Registrar</button>
-      </form>
-
-      <form id="loginForm" style="display:none;">
-        <input type="email" name="email" placeholder="E-mail" required />
-        <input type="password" name="password" placeholder="Senha" required />
-        <button type="submit">Entrar</button>
-      </form>
-
-      <p id="toggle-form">Já tem conta? <a href="#">Entrar</a></p>
+  <div class="overlay"></div>
+  <div class="content">
+    <h1>Bem-vindo(a) ao site Angelica GMZ 💖</h1>
+    <div class="button-container">
+      <a href="login.html">Entrar</a>
+      <a href="register.html">Criar Conta</a>
     </div>
   </div>
-
-  <script src="script.js"></script>
-  <script src="registerForm.js"></script>
-  <script src="loginForm.js"></script>
 </body>
 </html>
