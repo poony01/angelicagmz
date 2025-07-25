@@ -1,0 +1,43 @@
+/* css/style.css */
+body {
+  margin: 0;
+  padding: 0;
+  background-size: cover;
+  background-position: center;
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+.container {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  margin: 100px auto;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.title {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.socials a {
+  display: block;
+  margin: 10px 0;
+  font-size: 18px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.actions .btn {
+  display: block;
+  margin: 20px auto;
+  padding: 12px;
+  background: #ff0066;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
