@@ -41,3 +41,59 @@ body, html {
 .btn:hover {
   opacity: 0.8;
 }
+
+.auth-background {
+  background: linear-gradient(to right, #1a1a1a, #000);
+  color: white;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.auth-container {
+  background-color: #222;
+  padding: 40px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.auth-container h2 {
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.auth-container input[type="text"],
+.auth-container input[type="email"],
+.auth-container input[type="tel"],
+.auth-container input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: none;
+  background-color: #333;
+  color: white;
+}
+
+.auth-container .btn.register {
+  width: 100%;
+  background-color: #28a745;
+  margin-top: 15px;
+}
+
+.auth-container .link {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.show-password {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #ccc;
+  margin-top: 5px;
+}
