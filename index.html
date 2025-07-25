@@ -66,10 +66,10 @@
     .form-container {
       margin-top: 30px;
       background-color: rgba(255, 255, 255, 0.1);
-      padding: 30px;
+      padding: 25px;
       border-radius: 15px;
       width: 90%;
-      max-width: 400px;
+      max-width: 360px;
       display: none;
       backdrop-filter: blur(10px);
       box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
@@ -81,11 +81,11 @@
 
     .form-container input {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       margin: 10px 0;
       border: none;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 15px;
     }
 
     .password-container {
@@ -102,7 +102,7 @@
       right: 10px;
       transform: translateY(-50%);
       cursor: pointer;
-      font-size: 18px;
+      font-size: 16px;
       color: #fff;
     }
 
@@ -110,12 +110,24 @@
       width: 100%;
       background-color: #e91e63;
       color: white;
-      padding: 12px;
+      padding: 10px;
       border: none;
       border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
       margin-top: 10px;
+    }
+
+    .forgot-password {
+      margin-top: 8px;
+      text-align: right;
+      font-size: 13px;
+    }
+
+    .forgot-password a {
+      color: #ffc0cb;
+      text-decoration: underline;
+      cursor: pointer;
     }
 
     footer.social-footer {
@@ -169,6 +181,9 @@
         <input type="password" id="loginPassword" placeholder="Senha" required />
         <span class="toggle-password" onclick="togglePassword('loginPassword')">👁️</span>
       </div>
+      <div class="forgot-password">
+        <a onclick="esqueciSenha()">Esqueceu a senha?</a>
+      </div>
       <button onclick="login()">Entrar</button>
     </div>
 
@@ -200,8 +215,6 @@
     function showForm(type) {
       document.getElementById('loginForm').style.display = 'none';
       document.getElementById('registerForm').style.display = 'none';
-
-      // Esconder os ícones das redes sociais
       document.getElementById('socialFooter').classList.add('hidden');
 
       if (type === 'login') {
@@ -255,6 +268,24 @@
         window.location.href = 'home.html';
       } else {
         alert(data.message || 'Erro ao registrar.');
+      }
+    }
+
+    async function esqueciSenha() {
+      const email = prompt("Digite seu e-mail para recuperar a senha:");
+      if (!email) return;
+
+      const res = await fetch('/api/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert('Um link de recuperação foi enviado ao seu e-mail.');
+      } else {
+        alert(data.message || 'Erro ao solicitar recuperação.');
       }
     }
   </script>
