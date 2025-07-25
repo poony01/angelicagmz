@@ -1,30 +1,27 @@
-import fs from 'fs';
-import path from 'path';
+import { createClient } from '@supabase/supabase-js';
 
-export default function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).end();
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
+);
 
-  const usersPath = path.resolve('users.json');
-  if (!fs.existsSync(usersPath)) {
-    return res.status(500).json({ message: 'Arquivo de usuários não encontrado.' });
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Método não permitido' });
   }
 
   const { email, password } = req.body;
-  const users = JSON.parse(fs.readFileSync(usersPath));
 
-  const user = users.find(u => u.email === email && u.password === password);
-  if (!user) {
-    return res.status(401).json({ message: 'E-mail ou senha incorretos.' });
+  const { data, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('email', email)
+    .eq('password', password)
+    .single();
+
+  if (error || !data) {
+    return res.status(401).json({ message: 'Email ou senha inválidos' });
   }
 
-  res.status(200).json({
-    message: 'Login realizado com sucesso.',
-    user: {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      isPaid: user.isPaid
-    }
-  });
+  return res.status(200).json({ message: 'Login efetuado', user: data });
 }
