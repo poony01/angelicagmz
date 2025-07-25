@@ -8,12 +8,12 @@
     body {
       margin: 0;
       padding: 0;
-      background-image: url('background.jpg'); /* Substitua pelo nome correto da imagem */
+      background-image: url('background.jpg');
       background-size: cover;
       background-position: center;
       height: 100vh;
       font-family: Arial, sans-serif;
-      position: relative;
+      color: white;
     }
 
     .overlay {
@@ -33,15 +33,18 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      color: white;
       text-align: center;
+    }
+
+    .content h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
     }
 
     .button-container {
       display: flex;
       gap: 20px;
       flex-wrap: wrap;
-      margin-top: 20px;
     }
 
     .button-container button {
@@ -60,59 +63,61 @@
     }
 
     .form-container {
-      display: none;
-      margin-top: 30px;
-      background-color: rgba(0,0,0,0.6);
-      padding: 30px;
+      margin-top: 20px;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
       border-radius: 12px;
       width: 90%;
       max-width: 400px;
+      display: none;
     }
 
-    input {
-      display: block;
+    .form-container input {
       width: 100%;
       padding: 12px;
-      margin: 15px 0;
+      margin: 10px 0;
       border: none;
       border-radius: 8px;
       font-size: 16px;
     }
 
-    .password-container {
+    .form-container .password-container {
       position: relative;
     }
 
-    .password-container input {
+    .form-container .password-container input {
       padding-right: 40px;
     }
 
-    .toggle-password {
+    .form-container .toggle-password {
       position: absolute;
       top: 50%;
       right: 10px;
       transform: translateY(-50%);
       cursor: pointer;
-      color: #fff;
-      font-size: 18px;
     }
 
-    button[type="submit"] {
-      background-color: #e91e63;
-      padding: 12px;
-      border-radius: 8px;
+    .form-container button {
       width: 100%;
+      background-color: #e91e63;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
       font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
     }
 
-    a {
+    .form-container a {
       color: #fff;
       display: block;
       margin-top: 10px;
       text-decoration: underline;
+      cursor: pointer;
     }
 
-    .social-footer {
+    footer.social-footer {
       position: absolute;
       bottom: 20px;
       width: 100%;
@@ -130,126 +135,115 @@
     .social-footer a:hover img {
       transform: scale(1.2);
     }
+
+    @media (max-width: 600px) {
+      .content h1 {
+        font-size: 2em;
+      }
+      .button-container {
+        flex-direction: column;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="overlay"></div>
-
   <div class="content">
     <h1>Bem-vindo(a) ao site Angelica GMZ 💖</h1>
     <div class="button-container">
-      <button onclick="mostrarFormulario('login')">Entrar</button>
-      <button onclick="mostrarFormulario('register')">Criar Conta</button>
+      <button onclick="showForm('login')">Entrar</button>
+      <button onclick="showForm('register')">Criar Conta</button>
     </div>
 
-    <!-- Formulário de Login -->
-    <form id="loginForm" class="form-container">
+    <div class="form-container" id="loginForm">
       <h2>Entrar</h2>
-      <input type="email" name="email" placeholder="E-mail" required />
+      <input type="email" id="loginEmail" placeholder="E-mail" required />
       <div class="password-container">
-        <input type="password" name="password" placeholder="Senha" id="loginPassword" required />
+        <input type="password" id="loginPassword" placeholder="Senha" required />
         <span class="toggle-password" onclick="togglePassword('loginPassword')">👁️</span>
       </div>
-      <button type="submit">Entrar</button>
-    </form>
+      <button onclick="login()">Entrar</button>
+    </div>
 
-    <!-- Formulário de Cadastro -->
-    <form id="registerForm" class="form-container">
+    <div class="form-container" id="registerForm">
       <h2>Criar Conta</h2>
-      <input type="text" name="name" placeholder="Nome completo" required />
-      <input type="email" name="email" placeholder="E-mail" required />
-      <input type="text" name="phone" placeholder="Celular" required />
+      <input type="text" id="registerName" placeholder="Nome completo" required />
+      <input type="email" id="registerEmail" placeholder="E-mail" required />
+      <input type="text" id="registerPhone" placeholder="Celular" required />
       <div class="password-container">
-        <input type="password" name="password" placeholder="Senha" id="registerPassword" required />
+        <input type="password" id="registerPassword" placeholder="Senha" required />
         <span class="toggle-password" onclick="togglePassword('registerPassword')">👁️</span>
       </div>
-      <button type="submit">Cadastrar</button>
-    </form>
+      <button onclick="register()">Cadastrar</button>
+    </div>
+
+    <footer class="social-footer">
+      <a href="https://www.instagram.com/angelica__gmss" target="_blank" title="Instagram">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" />
+      </a>
+      <a href="https://t.me/AngelicaaGMZ" target="_blank" title="Telegram">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" />
+      </a>
+    </footer>
   </div>
 
-  <!-- Rodapé com ícones -->
-  <footer class="social-footer">
-    <a href="https://www.instagram.com/angelica__gmss" target="_blank">
-      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/instagram/instagram-original.svg" alt="Instagram" />
-    </a>
-    <a href="https://t.me/AngelicaaGMZ" target="_blank">
-      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" />
-    </a>
-  </footer>
-
   <script>
-    function togglePassword(id) {
-      const input = document.getElementById(id);
-      input.type = input.type === 'password' ? 'text' : 'password';
-    }
-
-    function mostrarFormulario(tipo) {
+    function showForm(type) {
       document.getElementById('loginForm').style.display = 'none';
       document.getElementById('registerForm').style.display = 'none';
-      if (tipo === 'login') {
+      if (type === 'login') {
         document.getElementById('loginForm').style.display = 'block';
       } else {
         document.getElementById('registerForm').style.display = 'block';
       }
     }
 
-    document.getElementById('loginForm').addEventListener('submit', async function (e) {
-      e.preventDefault();
-      const form = e.target;
+    function togglePassword(id) {
+      const input = document.getElementById(id);
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    async function login() {
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert('Login realizado com sucesso!');
+        window.location.href = 'home.html';
+      } else {
+        alert(data.message || 'Erro ao entrar.');
+      }
+    }
+
+    async function register() {
       const user = {
-        email: form.email.value,
-        password: form.password.value,
+        name: document.getElementById('registerName').value,
+        email: document.getElementById('registerEmail').value,
+        phone: document.getElementById('registerPhone').value,
+        password: document.getElementById('registerPassword').value,
       };
 
-      try {
-        const res = await fetch('/api/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(user)
-        });
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+      });
 
-        const data = await res.json();
-        if (res.ok) {
-          alert('Login realizado com sucesso!');
-          window.location.href = './home.html';
-        } else {
-          alert(data.message || 'Erro ao fazer login.');
-        }
-      } catch (err) {
-        console.error(err);
-        alert('Erro ao conectar com o servidor.');
+      const data = await res.json();
+      if (res.ok) {
+        alert('Conta criada com sucesso!');
+        window.location.href = 'home.html';
+      } else {
+        alert(data.message || 'Erro ao registrar.');
       }
-    });
-
-    document.getElementById('registerForm').addEventListener('submit', async function (e) {
-      e.preventDefault();
-      const form = e.target;
-      const user = {
-        name: form.name.value,
-        email: form.email.value,
-        phone: form.phone.value,
-        password: form.password.value,
-      };
-
-      try {
-        const res = await fetch('/api/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(user)
-        });
-
-        const data = await res.json();
-        if (res.ok) {
-          alert('Conta criada com sucesso!');
-          window.location.href = './home.html';
-        } else {
-          alert(data.message || 'Erro ao registrar.');
-        }
-      } catch (err) {
-        console.error(err);
-        alert('Erro ao conectar com o servidor.');
-      }
-    });
+    }
   </script>
 </body>
 </html>
