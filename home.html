@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Conteúdo Exclusivo - Angelica GMZ</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      text-align: center;
+    }
+
+    .content-container {
+      margin-top: 40px;
+    }
+
+    .locked {
+      position: relative;
+      width: 300px;
+      height: 200px;
+      margin: 20px auto;
+      background-color: #222;
+      filter: blur(8px);
+      border: 2px solid #e91e63;
+      border-radius: 10px;
+    }
+
+    .lock-icon {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 48px;
+      color: #fff;
+      z-index: 10;
+    }
+
+    .plans {
+      margin-top: 30px;
+    }
+
+    .plans button {
+      padding: 12px 25px;
+      margin: 10px;
+      background-color: #e91e63;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .pix-box {
+      display: none;
+      background-color: #111;
+      margin: 20px auto;
+      padding: 20px;
+      width: 80%;
+      max-width: 400px;
+      border: 2px solid #e91e63;
+      border-radius: 10px;
+    }
+
+    .pix-box img {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    .copy-button {
+      background-color: #444;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .copy-button:hover {
+      background-color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>Conteúdo Exclusivo 🔒</h1>
+
+  <div class="content-container">
+    <div class="locked">
+      <div class="lock-icon">🔒</div>
+    </div>
+
+    <div class="locked">
+      <div class="lock-icon">🔒</div>
+    </div>
+  </div>
+
+  <div class="plans">
+    <h2>Assine para desbloquear:</h2>
+    <button onclick="mostrarPix(1)">Plano 1 mês - R$19,90</button>
+    <button onclick="mostrarPix(2)">Plano 2 meses - R$29,90</button>
+    <button onclick="mostrarPix(3)">Plano 3 meses - R$39,90</button>
+  </div>
+
+  <div class="pix-box" id="pixBox">
+    <h3>Pagamento via Pix</h3>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/QR_code_example.svg" alt="QR Code Pix">
+    <p><strong>Chave Pix:</strong> <span id="chavePix">9ace034e-0471-496f-b2b0-1910826130ed</span></p>
+    <button class="copy-button" onclick="copiarChavePix()">Copiar chave Pix</button>
+  </div>
+
+  <script>
+    function mostrarPix(plano) {
+      document.getElementById('pixBox').style.display = 'block';
+      alert("Após o pagamento, o conteúdo será desbloqueado automaticamente!");
+    }
+
+    function copiarChavePix() {
+      const chave = document.getElementById('chavePix').innerText;
+      navigator.clipboard.writeText(chave).then(() => {
+        alert("Chave Pix copiada!");
+      });
+    }
+  </script>
+</body>
+</html>
