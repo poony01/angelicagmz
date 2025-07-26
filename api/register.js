@@ -1,30 +1,35 @@
 // register.js
-import { createClient } from '@supabase/supabase-js';
+document.getElementById("registerForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const password = document.getElementById("password").value.trim();
 
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Método não permitido' });
-  }
-
-  const { name, email, phone, password } = req.body;
-
+  // Verifica se todos os campos estão preenchidos
   if (!name || !email || !phone || !password) {
-    return res.status(400).json({ error: 'Todos os campos são obrigatórios' });
+    alert("Todos os campos são obrigatórios.");
+    return;
   }
 
   try {
     const { data, error } = await supabase
-      .from('usuarios')
-      .insert([{ name, email, phone, password }]);
+      .from("users")
+      .insert([
+        { name, email, phone, password },
+      ]);
 
     if (error) {
-      return res.status(500).json({ error: error.message });
+      console.error("Erro ao registrar:", error.message);
+      alert("Erro ao registrar: " + error.message);
+      return;
     }
 
-    return res.status(200).json({ message: 'Usuário cadastrado com sucesso', user: data });
-  } catch (e) {
-    return res.status(500).json({ error: 'Erro ao cadastrar usuário' });
+    alert("Conta criada com sucesso!");
+    window.location.href = "/login.html";
+  } catch (err) {
+    console.error("Erro inesperado:", err);
+    alert("Erro inesperado ao registrar.");
   }
-}
+});
