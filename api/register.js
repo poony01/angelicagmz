@@ -1,39 +1,54 @@
-// register.js
+import { createClient } from "@supabase/supabase-js";
 
-// Crie o cliente Supabase corretamente
 const supabase = createClient(
-  "https://SEU_SUPABASE_URL.supabase.co",      // Substitua pelo seu
-  "SEU_SUPABASE_ANON_KEY"                       // Substitua pelo seu
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
 );
 
-document.getElementById("registerForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Método não permitido" });
+  }
 
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const password = document.getElementById("password").value.trim();
+  const { name, email, phone, password } = req.body;
 
   if (!name || !email || !phone || !password) {
-    alert("Todos os campos são obrigatórios.");
-    return;
+    return res.status(400).json({ error: "Todos os campos são obrigatórios" });
   }
 
   try {
-    const { data, error } = await supabase
+    // Verifica se o e-mail já está em uso
+    const { data: existing, error: errorCheck } = await supabase
       .from("users")
-      .insert([{ name, email, phone, password }]);
+      .select("*")
+      .eq("email", email);
 
-    if (error) {
-      console.error("Erro ao registrar:", error.message);
-      alert("Erro ao registrar: " + error.message);
-      return;
+    if (existing && existing.length > 0) {
+      return res.status(400).json({ error: "E-mail já cadastrado." });
     }
 
-    alert("Conta criada com sucesso!");
-    window.location.href = "/login.html";
-  } catch (err) {
-    console.error("Erro inesperado:", err);
-    alert("Erro inesperado ao registrar.");
+    // Cria novo usuário
+    const { data, error } = await supabase.from("users").insert([
+      {
+        name,
+        email,
+        phone,
+        password,
+        plano: "free",
+        liberado: false,
+        expiracao: null,
+      },
+    ]);
+
+    if (error) {
+      return res.status(500).json({ error: "Erro ao cadastrar usuário." });
+    }
+
+    // Redireciona para home após cadastro
+    res.writeHead(302, { Location: "/home.html" });
+    res.end();
+  } catch (e) {
+    console.error("Erro interno:", e);
+    res.status(500).json({ error: "Erro interno no servidor." });
   }
-});
+}
