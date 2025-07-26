@@ -1,9 +1,9 @@
 // register.js
 
-// Inicialize o Supabase
-const supabase = supabase || createClient(
-  "https://SEU_SUPABASE_URL.supabase.co", // substitua pelo seu
-  "SEU_SUPABASE_ANON_KEY"                 // substitua pelo seu
+// Crie o cliente Supabase corretamente
+const supabase = createClient(
+  "https://SEU_SUPABASE_URL.supabase.co",      // Substitua pelo seu
+  "SEU_SUPABASE_ANON_KEY"                       // Substitua pelo seu
 );
 
 document.getElementById("registerForm").addEventListener("submit", async (e) => {
