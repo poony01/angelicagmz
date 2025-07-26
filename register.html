@@ -3,54 +3,113 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Registrar - Angelica GMZ</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Cadastro - Angelica GMZ 💖</title>
+  <style>
+    body {
+      background-image: url('./background.jpg');
+      background-size: cover;
+      background-position: center;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #fff;
+      text-align: center;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      margin: 80px auto;
+      max-width: 350px;
+      border-radius: 12px;
+    }
+
+    h2 {
+      margin-bottom: 24px;
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      border: none;
+    }
+
+    .eye-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    button {
+      background-color: #e91e63;
+      color: white;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <div class="form-container">
+  <div class="container">
+    <h2>Criar Conta</h2>
     <form id="registerForm">
-      <h2>Criar Conta</h2>
       <input type="text" name="name" placeholder="Nome completo" required />
       <input type="email" name="email" placeholder="E-mail" required />
-      <input type="text" name="phone" placeholder="Celular" required />
-      
-      <div class="password-container">
-        <input type="password" name="password" id="registerPassword" placeholder="Senha" required />
-        <span class="toggle-password" onclick="togglePassword('registerPassword')">👁️</span>
+      <input type="tel" name="phone" placeholder="Celular" required />
+
+      <div class="input-wrapper">
+        <input type="password" name="password" id="password" placeholder="Senha" required />
+        <span class="eye-icon" onclick="togglePassword()">👁️</span>
       </div>
 
       <button type="submit">Cadastrar</button>
-      <a href="login.html">Já tenho conta</a>
     </form>
   </div>
 
   <script>
-    function togglePassword(id) {
-      const input = document.getElementById(id);
-      input.type = input.type === 'password' ? 'text' : 'password';
+    function togglePassword() {
+      const pwd = document.getElementById('password');
+      pwd.type = pwd.type === 'password' ? 'text' : 'password';
     }
 
-    document.getElementById('registerForm').addEventListener('submit', async function (e) {
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const form = e.target;
-      const user = {
-        name: form.name.value,
-        email: form.email.value,
-        phone: form.phone.value,
-        password: form.password.value,
-      };
 
-      const res = await fetch('/api/register', {
+      const name = e.target.name.value.trim();
+      const email = e.target.email.value.trim();
+      const phone = e.target.phone.value.trim();
+      const password = e.target.password.value;
+
+      if (!name || !email || !phone || !password) {
+        alert('Todos os campos são obrigatórios');
+        return;
+      }
+
+      const res = await fetch('/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
+        body: JSON.stringify({ name, email, phone, password })
       });
 
       const data = await res.json();
+
       if (res.ok) {
-        window.location.href = '/home.html';
+        alert('Conta criada com sucesso!');
+        window.location.href = '/login.html';
       } else {
-        alert(data.message || 'Erro ao registrar');
+        alert(data.error || 'Erro ao criar conta');
       }
     });
   </script>
