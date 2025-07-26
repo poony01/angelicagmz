@@ -19,10 +19,11 @@ export default async function handler(req, res) {
 
   try {
     const { data, error } = await supabase
-      .from("usuarios")
-      .insert([{ nome, email, senha }]);
+      .from("users") // <- nome correto da tabela
+      .insert([{ name: nome, email, password: senha }]); // <- campos corretos
 
     if (error) {
+      console.error("Erro Supabase:", error.message);
       throw error;
     }
 
