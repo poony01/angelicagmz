@@ -19,17 +19,17 @@ export default async function handler(req, res) {
 
   try {
     const { data, error } = await supabase
-      .from("users") // <- nome correto da tabela
-      .insert([{ name: nome, email, password: senha }]); // <- campos corretos
+      .from("users")
+      .insert([{ nome, email, senha }]);
 
     if (error) {
       console.error("Erro Supabase:", error.message);
-      throw error;
+      return res.status(500).json({ error: "Erro ao registrar" });
     }
 
-    res.status(200).json({ message: "Usuário registrado com sucesso", data });
+    return res.status(200).json({ message: "Registro bem-sucedido" });
   } catch (err) {
-    console.error("Erro ao registrar:", err.message);
-    res.status(500).json({ error: "Erro ao registrar usuário" });
+    console.error("Erro geral:", err.message);
+    return res.status(500).json({ error: "Erro no servidor" });
   }
 }
