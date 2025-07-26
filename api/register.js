@@ -11,27 +11,25 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Método não permitido" });
   }
 
-  const { nome, email, senha } = req.body;
+  const { name, email, password } = req.body;
 
-  // Validação simples
-  if (!nome || !email || !senha) {
-    return res.status(400).json({ error: "Todos os campos são obrigatórios" });
+  if (!name || !email || !password) {
+    return res.status(400).json({ error: "Todos os campos são obrigatórios." });
   }
 
   try {
-    // Tenta inserir (ajustar os nomes conforme a tabela real)
     const { data, error } = await supabase
       .from("users")
-      .insert([{ nome: nome, email: email, senha: senha }]);
+      .insert([{ name, email, password }]);
 
     if (error) {
-      console.error("Erro Supabase:", error.message);
-      return res.status(500).json({ error: "Erro ao registrar no banco de dados" });
+      console.error("Erro ao registrar:", error.message);
+      return res.status(400).json({ error: "Erro ao registrar. " + error.message });
     }
 
-    return res.status(200).json({ message: "Registro bem-sucedido" });
+    return res.status(200).json({ message: "Usuário registrado com sucesso!" });
   } catch (err) {
-    console.error("Erro geral:", err.message);
-    return res.status(500).json({ error: "Erro no servidor" });
+    console.error("Erro geral:", err);
+    return res.status(500).json({ error: "Erro interno no servidor" });
   }
 }
