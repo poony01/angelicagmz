@@ -13,18 +13,20 @@ export default async function handler(req, res) {
 
   const { nome, email, senha } = req.body;
 
+  // Validação simples
   if (!nome || !email || !senha) {
     return res.status(400).json({ error: "Todos os campos são obrigatórios" });
   }
 
   try {
+    // Tenta inserir (ajustar os nomes conforme a tabela real)
     const { data, error } = await supabase
       .from("users")
-      .insert([{ nome, email, senha }]);
+      .insert([{ nome: nome, email: email, senha: senha }]);
 
     if (error) {
       console.error("Erro Supabase:", error.message);
-      return res.status(500).json({ error: "Erro ao registrar" });
+      return res.status(500).json({ error: "Erro ao registrar no banco de dados" });
     }
 
     return res.status(200).json({ message: "Registro bem-sucedido" });
