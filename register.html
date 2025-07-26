@@ -1,70 +1,33 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cadastro - Angelica GMZ</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: url('sua-imagem-de-fundo.jpg') no-repeat center center fixed;
-      background-size: cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
+<form id="register-form">
+  <input type="text" id="nome" placeholder="Nome completo" required />
+  <input type="email" id="email" placeholder="E-mail" required />
+  <input type="password" id="senha" placeholder="Senha" required />
+  <button type="submit">Criar conta</button>
+</form>
+
+<script>
+  const form = document.getElementById("register-form");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const nome = document.getElementById("nome").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("senha").value.trim();
+
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nome, email, senha }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      alert("Conta criada com sucesso!");
+      window.location.href = "/home.html"; // redireciona
+    } else {
+      alert(data.error || "Erro ao registrar.");
     }
-
-    form {
-      background: rgba(0, 0, 0, 0.8);
-      padding: 30px;
-      border-radius: 10px;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      width: 300px;
-    }
-
-    input {
-      margin-bottom: 15px;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-    }
-
-    button {
-      padding: 10px;
-      background-color: #ff3366;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #e6005c;
-    }
-  </style>
-</head>
-<body>
-
-  <form id="registerForm">
-    <h2>Crie sua conta</h2>
-    <input type="text" id="name" placeholder="Seu nome completo" required />
-    <input type="email" id="email" placeholder="Seu e-mail" required />
-    <input type="text" id="phone" placeholder="Seu celular" required />
-    <input type="password" id="password" placeholder="Sua senha" required />
-    <button type="submit">Cadastrar</button>
-  </form>
-
-  <!-- Supabase CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script>
-    const { createClient } = supabase;
-  </script>
-
-  <!-- Script de cadastro -->
-  <script src="register.js"></script>
-</body>
-</html>
+  });
+</script>
