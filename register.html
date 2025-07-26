@@ -2,22 +2,108 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cadastro - Angelica GMZ</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: url('fundo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-container {
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 30px;
+      border-radius: 10px;
+      width: 300px;
+    }
+
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #ff3366;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .error {
+      color: red;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .success {
+      color: lightgreen;
+      margin-top: 10px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
+  <div class="form-container">
     <h2>Crie sua conta</h2>
     <form id="registerForm">
-      <input type="text" id="nome" placeholder="Seu nome" required />
-      <input type="email" id="email" placeholder="Seu e-mail" required />
-      <input type="password" id="senha" placeholder="Sua senha" required />
+      <input type="text" id="name" name="name" placeholder="Nome completo" required />
+      <input type="email" id="email" name="email" placeholder="E-mail" required />
+      <input type="password" id="password" name="password" placeholder="Senha" required />
       <button type="submit">Cadastrar</button>
     </form>
-    <p>Já tem uma conta? <a href="login.html">Entrar</a></p>
+    <div id="message" class="error"></div>
   </div>
 
-  <script src="registerForm.js"></script>
+  <script>
+    const form = document.getElementById('registerForm');
+    const message = document.getElementById('message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const password = form.password.value.trim();
+
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, email, password })
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        message.className = 'success';
+        message.textContent = result.message || 'Cadastro realizado com sucesso!';
+        setTimeout(() => {
+          window.location.href = '/home.html'; // redireciona para a home
+        }, 2000);
+      } else {
+        message.className = 'error';
+        message.textContent = result.error || 'Erro ao registrar.';
+      }
+    });
+  </script>
 </body>
 </html>
