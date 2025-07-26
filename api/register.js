@@ -1,3 +1,4 @@
+// api/register.js
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
@@ -10,45 +11,24 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Método não permitido" });
   }
 
-  const { name, email, phone, password } = req.body;
+  const { nome, email, senha } = req.body;
 
-  if (!name || !email || !phone || !password) {
+  if (!nome || !email || !senha) {
     return res.status(400).json({ error: "Todos os campos são obrigatórios" });
   }
 
   try {
-    // Verifica se o e-mail já está em uso
-    const { data: existing, error: errorCheck } = await supabase
-      .from("users")
-      .select("*")
-      .eq("email", email);
-
-    if (existing && existing.length > 0) {
-      return res.status(400).json({ error: "E-mail já cadastrado." });
-    }
-
-    // Cria novo usuário
-    const { data, error } = await supabase.from("users").insert([
-      {
-        name,
-        email,
-        phone,
-        password,
-        plano: "free",
-        liberado: false,
-        expiracao: null,
-      },
-    ]);
+    const { data, error } = await supabase
+      .from("usuarios")
+      .insert([{ nome, email, senha }]);
 
     if (error) {
-      return res.status(500).json({ error: "Erro ao cadastrar usuário." });
+      throw error;
     }
 
-    // Redireciona para home após cadastro
-    res.writeHead(302, { Location: "/home.html" });
-    res.end();
-  } catch (e) {
-    console.error("Erro interno:", e);
-    res.status(500).json({ error: "Erro interno no servidor." });
+    res.status(200).json({ message: "Usuário registrado com sucesso", data });
+  } catch (err) {
+    console.error("Erro ao registrar:", err.message);
+    res.status(500).json({ error: "Erro ao registrar usuário" });
   }
 }
