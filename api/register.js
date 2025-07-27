@@ -1,19 +1,16 @@
 import { createClient } from "@supabase/supabase-js";
 
+// Cria o cliente do Supabase
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_ANON_KEY
 );
 
-// Lê o corpo da requisição manualmente (requisito na Vercel)
-async function getRequestBody(req) {
-  const buffers = [];
-  for await (const chunk of req) {
-    buffers.push(chunk);
-  }
-  const data = Buffer.concat(buffers).toString();
-  return JSON.parse(data);
-}
+export const config = {
+  api: {
+    bodyParser: false, // desativa o bodyParser interno da Vercel
+  },
+};
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -21,7 +18,13 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { name, email, password } = await getRequestBody(req);
+    // Lê o corpo da requisição manualmente
+    const buffers = [];
+    for await (const chunk of req) {
+      buffers.push(chunk);
+    }
+    const bodyData = Buffer.concat(buffers).toString();
+    const { name, email, password } = JSON.parse(bodyData);
 
     if (!name || !email || !password) {
       return res.status(400).json({ error: "Todos os campos são obrigatórios." });
