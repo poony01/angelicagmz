@@ -1,291 +1,52 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Angelica GMZ</title>
+  <title>Angelica GMZ - Início</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      background-image: url('background.jpg');
-      background-size: cover;
-      background-position: center;
-      height: 100vh;
       font-family: Arial, sans-serif;
-      color: white;
-    }
-
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.6);
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      z-index: 1;
-    }
-
-    .content {
-      position: relative;
-      z-index: 2;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
       text-align: center;
+      padding: 50px;
+      background: linear-gradient(to bottom right, #f7d2e2, #ffe4f0);
     }
-
-    .content h1 {
-      font-size: 2.5em;
+    h1 {
+      font-size: 2.2em;
       margin-bottom: 20px;
     }
-
-    .button-container {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
+    p {
+      font-size: 1.2em;
+      margin-bottom: 40px;
     }
-
-    .button-container button {
-      padding: 15px 30px;
-      background-color: #e91e63;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 1.1em;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .button-container button:hover {
-      background-color: #c2185b;
-    }
-
-    .form-container {
-      margin-top: 30px;
-      background-color: rgba(255, 255, 255, 0.1);
-      padding: 25px;
-      border-radius: 15px;
-      width: 90%;
-      max-width: 360px;
-      display: none;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-    }
-
-    .form-container h2 {
-      margin-bottom: 20px;
-    }
-
-    .form-container input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
+    button {
+      padding: 12px 30px;
+      font-size: 1em;
       border: none;
       border-radius: 8px;
-      font-size: 15px;
-    }
-
-    .password-container {
-      position: relative;
-    }
-
-    .password-container input {
-      padding-right: 40px;
-    }
-
-    .toggle-password {
-      position: absolute;
-      top: 50%;
-      right: 10px;
-      transform: translateY(-50%);
       cursor: pointer;
-      font-size: 16px;
-      color: #fff;
-    }
-
-    .form-container button {
-      width: 100%;
       background-color: #e91e63;
       color: white;
-      padding: 10px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 10px;
+      transition: background 0.3s;
     }
-
-    .forgot-password {
-      margin-top: 8px;
-      text-align: right;
-      font-size: 13px;
-    }
-
-    .forgot-password a {
-      color: #ffc0cb;
-      text-decoration: underline;
-      cursor: pointer;
-    }
-
-    footer.social-footer {
-      position: absolute;
-      bottom: 20px;
-      width: 100%;
-      text-align: center;
-      z-index: 3;
-    }
-
-    .social-footer.hidden {
-      display: none;
-    }
-
-    .social-footer a img {
-      width: 40px;
-      height: 40px;
-      margin: 0 10px;
-      transition: transform 0.3s;
-    }
-
-    .social-footer a:hover img {
-      transform: scale(1.2);
-    }
-
-    @media (max-width: 600px) {
-      .content h1 {
-        font-size: 2em;
-      }
-      .button-container {
-        flex-direction: column;
-      }
+    button:hover {
+      background-color: #d81b60;
     }
   </style>
 </head>
 <body>
-  <div class="overlay"></div>
-  <div class="content">
-    <h1>Bem-vindo(a) ao site Angelica GMZ 💖</h1>
-
-    <div class="button-container">
-      <button onclick="showForm('login')">Entrar</button>
-      <button onclick="showForm('register')">Criar Conta</button>
-    </div>
-
-    <!-- FORMULÁRIO DE LOGIN -->
-    <div class="form-container" id="loginForm">
-      <h2>Entrar</h2>
-      <input type="email" id="loginEmail" placeholder="E-mail" required />
-      <div class="password-container">
-        <input type="password" id="loginPassword" placeholder="Senha" required />
-        <span class="toggle-password" onclick="togglePassword('loginPassword')">👁️</span>
-      </div>
-      <div class="forgot-password">
-        <a onclick="esqueciSenha()">Esqueceu a senha?</a>
-      </div>
-      <button onclick="login()">Entrar</button>
-    </div>
-
-    <!-- FORMULÁRIO DE REGISTRO -->
-    <div class="form-container" id="registerForm">
-      <h2>Criar Conta</h2>
-      <input type="text" id="registerName" placeholder="Nome completo" required />
-      <input type="email" id="registerEmail" placeholder="E-mail" required />
-      <input type="text" id="registerPhone" placeholder="Celular" required />
-      <div class="password-container">
-        <input type="password" id="registerPassword" placeholder="Senha" required />
-        <span class="toggle-password" onclick="togglePassword('registerPassword')">👁️</span>
-      </div>
-      <button onclick="register()">Cadastrar</button>
-    </div>
-
-    <!-- RODAPÉ COM REDES SOCIAIS -->
-    <footer class="social-footer" id="socialFooter">
-      <a href="https://www.instagram.com/angelica__gmss" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" />
-      </a>
-      <a href="https://t.me/AngelicaaGMZ" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" />
-      </a>
-    </footer>
-  </div>
+  <h1>Bem-vindo(a) ao site da Angelica GMZ</h1>
+  <p>Para acessar o conteúdo, entre ou crie uma conta.</p>
+  <button onclick="entrar()">Continuar</button>
 
   <script>
-    function showForm(type) {
-      document.getElementById('loginForm').style.display = 'none';
-      document.getElementById('registerForm').style.display = 'none';
-      document.getElementById('socialFooter').classList.add('hidden');
-
-      if (type === 'login') {
-        document.getElementById('loginForm').style.display = 'block';
-      } else if (type === 'register') {
-        document.getElementById('registerForm').style.display = 'block';
-      }
-    }
-
-    function togglePassword(id) {
-      const input = document.getElementById(id);
-      input.type = input.type === 'password' ? 'text' : 'password';
-    }
-
-    async function login() {
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
-
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        alert('Login realizado com sucesso!');
+    function entrar() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
         window.location.href = 'home.html';
       } else {
-        alert(data.message || 'Erro ao entrar.');
-      }
-    }
-
-    async function register() {
-      const user = {
-        name: document.getElementById('registerName').value,
-        email: document.getElementById('registerEmail').value,
-        phone: document.getElementById('registerPhone').value,
-        password: document.getElementById('registerPassword').value,
-      };
-
-      const res = await fetch('/api/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        alert('Conta criada com sucesso!');
-        window.location.href = 'home.html';
-      } else {
-        alert(data.message || 'Erro ao registrar.');
-      }
-    }
-
-    async function esqueciSenha() {
-      const email = prompt("Digite seu e-mail para recuperar a senha:");
-      if (!email) return;
-
-      const res = await fetch('/api/forgot-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        alert('Um link de recuperação foi enviado ao seu e-mail.');
-      } else {
-        alert(data.message || 'Erro ao solicitar recuperação.');
+        window.location.href = 'login.html';
       }
     }
   </script>
