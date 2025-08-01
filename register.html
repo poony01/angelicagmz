@@ -1,0 +1,40 @@
+<!-- register.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Criar Conta</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    form { max-width: 400px; margin: auto; }
+    input { width: 100%; padding: 10px; margin: 10px 0; }
+    .toggle-password { cursor: pointer; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); }
+    .password-container { position: relative; }
+    button { padding: 10px 20px; width: 100%; }
+    a { display: block; margin-top: 10px; text-align: center; }
+  </style>
+</head>
+<body>
+  <h2>Crie sua conta</h2>
+  <form id="register-form">
+    <input type="email" id="email" placeholder="Seu e-mail" required />
+
+    <div class="password-container">
+      <input type="password" id="password" placeholder="Crie uma senha" required />
+      <span class="toggle-password" onclick="togglePassword()">👁️</span>
+    </div>
+
+    <button type="submit">Cadastrar</button>
+    <a href="login.html">Já tem conta? Entrar</a>
+  </form>
+
+  <script type="module" src="./register.js"></script>
+  <script>
+    function togglePassword() {
+      const password = document.getElementById('password');
+      password.type = password.type === 'password' ? 'text' : 'password';
+    }
+  </script>
+</body>
+</html>
