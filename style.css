@@ -1,0 +1,66 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  height: 100vh;
+}
+
+.background {
+  background: url('background.jpg') no-repeat center center;
+  background-size: cover;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.password-field {
+  position: relative;
+}
+
+#togglePassword {
+  position: absolute;
+  right: 15px;
+  top: 35%;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+button {
+  width: 100%;
+  background: #a21caf;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #86198f;
+}
+
+a {
+  color: #d8b4fe;
+  text-decoration: none;
+}
