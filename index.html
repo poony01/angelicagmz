@@ -4,90 +4,120 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Angelica GMZ - Início</title>
+  <title>Angelica GMZ - Acesso</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      text-align: center;
+      background: linear-gradient(to bottom right, #ffe4f0, #f8d4e3);
       padding: 40px 20px;
-      background: linear-gradient(to bottom right, #f7d2e2, #ffe4f0);
+      text-align: center;
     }
+
     h1 {
-      font-size: 2.2em;
+      font-size: 2em;
       margin-bottom: 10px;
     }
-    p {
-      font-size: 1.1em;
-      margin-bottom: 30px;
-    }
+
     button, input {
       padding: 12px;
       font-size: 1em;
-      margin: 10px auto;
       width: 90%;
       max-width: 300px;
-      border: none;
+      margin: 10px auto;
       border-radius: 8px;
+      border: none;
     }
+
     input {
       background: white;
       border: 1px solid #ccc;
     }
+
     button {
       cursor: pointer;
       background-color: #e91e63;
       color: white;
-      transition: background 0.3s;
     }
+
     button:hover {
       background-color: #d81b60;
     }
+
+    .form {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
     .senha-container {
       position: relative;
       max-width: 300px;
       margin: 0 auto;
     }
+
     .senha-container input {
       width: 100%;
       padding-right: 40px;
     }
+
     .senha-container span {
       position: absolute;
-      right: 10px;
       top: 12px;
+      right: 10px;
       cursor: pointer;
-      user-select: none;
-      color: #888;
     }
   </style>
 </head>
 <body>
-  <h1>Bem-vindo(a) ao site da Angelica GMZ</h1>
-  <p>Crie uma conta ou entre para acessar o conteúdo exclusivo.</p>
+  <h1>Angelica GMZ 👑</h1>
+  <p>Escolha uma opção:</p>
 
-  <input type="email" id="email" placeholder="Digite seu e-mail" />
+  <button onclick="mostrarLogin()">Entrar</button>
+  <button onclick="mostrarCadastro()">Criar Conta</button>
 
-  <div class="senha-container">
-    <input type="password" id="senha" placeholder="Digite sua senha" />
-    <span onclick="toggleSenha()">👁️</span>
+  <!-- Formulário de login -->
+  <div id="formLogin" class="form">
+    <input type="email" id="loginEmail" placeholder="Seu e-mail" />
+    <div class="senha-container">
+      <input type="password" id="loginSenha" placeholder="Sua senha" />
+      <span onclick="toggleSenha('loginSenha')">👁️</span>
+    </div>
+    <button onclick="entrar()">Entrar</button>
+    <p><a href="#" onclick="esqueciSenha()">Esqueci minha senha</a></p>
   </div>
 
-  <button onclick="entrar()">Entrar</button>
-  <button onclick="criarConta()">Criar Conta</button>
-
-  <p><a href="#" onclick="esqueciSenha()">Esqueci minha senha</a></p>
+  <!-- Formulário de cadastro -->
+  <div id="formCadastro" class="form">
+    <input type="email" id="cadastroEmail" placeholder="Seu e-mail" />
+    <div class="senha-container">
+      <input type="password" id="cadastroSenha" placeholder="Sua senha" />
+      <span onclick="toggleSenha('cadastroSenha')">👁️</span>
+    </div>
+    <button onclick="criarConta()">Criar</button>
+  </div>
 
   <script type="module">
     import { supabase } from './supabaseClient.js';
 
-    window.toggleSenha = function () {
-      const senhaInput = document.getElementById("senha");
-      senhaInput.type = senhaInput.type === "password" ? "text" : "password";
-    }
+    window.toggleSenha = function (id) {
+      const input = document.getElementById(id);
+      input.type = input.type === "password" ? "text" : "password";
+    };
+
+    window.mostrarLogin = function () {
+      document.getElementById("formLogin").style.display = "flex";
+      document.getElementById("formCadastro").style.display = "none";
+    };
+
+    window.mostrarCadastro = function () {
+      document.getElementById("formCadastro").style.display = "flex";
+      document.getElementById("formLogin").style.display = "none";
+    };
 
     window.entrar = async function () {
-      const email = document.getElementById("email").value;
-      const senha = document.getElementById("senha").value;
+      const email = document.getElementById("loginEmail").value;
+      const senha = document.getElementById("loginSenha").value;
 
       if (!email || !senha) return alert("Preencha todos os campos!");
 
@@ -102,11 +132,11 @@
         localStorage.setItem("user", JSON.stringify(data.user));
         window.location.href = "home.html";
       }
-    }
+    };
 
     window.criarConta = async function () {
-      const email = document.getElementById("email").value;
-      const senha = document.getElementById("senha").value;
+      const email = document.getElementById("cadastroEmail").value;
+      const senha = document.getElementById("cadastroSenha").value;
 
       if (!email || !senha) return alert("Preencha todos os campos!");
 
@@ -116,20 +146,20 @@
       });
 
       if (error) {
-        alert("Erro ao cadastrar: " + error.message);
+        alert("Erro ao criar conta: " + error.message);
       } else {
         alert("Conta criada! Verifique seu e-mail.");
         localStorage.setItem("user", JSON.stringify(data.user));
         window.location.href = "home.html";
       }
-    }
+    };
 
     window.esqueciSenha = async function () {
-      const email = document.getElementById("email").value;
+      const email = document.getElementById("loginEmail").value;
       if (!email) return alert("Digite seu e-mail para redefinir a senha.");
 
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: window.location.origin + "/index.html"
+        redirectTo: window.location.origin + "/index.html",
       });
 
       if (error) {
@@ -137,7 +167,7 @@
       } else {
         alert("Enviamos um link de redefinição para seu e-mail.");
       }
-    }
+    };
   </script>
 </body>
 </html>
