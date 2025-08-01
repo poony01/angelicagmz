@@ -1,39 +1,89 @@
-<!-- register.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Criar Conta</title>
+  <title>Registro - Angelica GMZ</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    form { max-width: 400px; margin: auto; }
-    input { width: 100%; padding: 10px; margin: 10px 0; }
-    .toggle-password { cursor: pointer; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); }
-    .password-container { position: relative; }
-    button { padding: 10px 20px; width: 100%; }
-    a { display: block; margin-top: 10px; text-align: center; }
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('0B48661A-0339-4FD2-859A-D850EF0018D0.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 8px;
+      max-width: 400px;
+      margin: 80px auto;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 25px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    button {
+      background-color: #ff4da6;
+      color: white;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    a {
+      color: #ffd700;
+    }
   </style>
 </head>
 <body>
-  <h2>Crie sua conta</h2>
-  <form id="register-form">
-    <input type="email" id="email" placeholder="Seu e-mail" required />
+  <div class="container">
+    <h1>Bem-vindo ao privado da Angélica</h1>
+    <form id="register-form">
+      <input type="email" id="email" placeholder="E-mail" required />
+      <div class="password-wrapper">
+        <input type="password" id="password" placeholder="Criar senha" required />
+        <button type="button" class="toggle-password" onclick="togglePassword()">👁️</button>
+      </div>
+      <button type="submit">Criar conta</button>
+    </form>
+    <p>Já tem uma conta? <a href="login.html">Entre agora</a></p>
+  </div>
 
-    <div class="password-container">
-      <input type="password" id="password" placeholder="Crie uma senha" required />
-      <span class="toggle-password" onclick="togglePassword()">👁️</span>
-    </div>
-
-    <button type="submit">Cadastrar</button>
-    <a href="login.html">Já tem conta? Entrar</a>
-  </form>
-
-  <script type="module" src="./register.js"></script>
   <script>
     function togglePassword() {
-      const password = document.getElementById('password');
-      password.type = password.type === 'password' ? 'text' : 'password';
+      const passwordInput = document.getElementById("password");
+      passwordInput.type = passwordInput.type === "password" ? "text" : "password";
     }
   </script>
 </body>
