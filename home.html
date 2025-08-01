@@ -2,31 +2,33 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Página Inicial</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privado da Angelica</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 40px; }
-    button { padding: 10px 20px; margin-top: 20px; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff0f5;
+      padding: 30px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #d81b60;
+    }
+
+    .conteudo {
+      margin-top: 40px;
+      font-size: 1.2em;
+    }
   </style>
 </head>
 <body>
-  <h1>Bem-vindo(a), <span id="user-email">usuário</span>!</h1>
-  <p>Você está logado.</p>
-  <button onclick="logout()">Sair</button>
+  <h2>Bem-vindo(a) ao privado da Angelica 💖</h2>
 
-  <script>
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
-      window.location.href = 'login.html';
-    } else {
-      document.getElementById('user-email').textContent = user.email;
-    }
-
-    function logout() {
-      localStorage.removeItem('user');
-      window.location.href = 'login.html';
-    }
-  </script>
+  <div class="conteudo">
+    <!-- Aqui depois você vai colocar as imagens e vídeos desbloqueados -->
+    <p>Conteúdo exclusivo será exibido aqui após a verificação de pagamento 💎</p>
+  </div>
 </body>
 </html>
