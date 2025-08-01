@@ -42,44 +42,58 @@
     button:hover {
       background-color: #d81b60;
     }
-    #login-area {
-      display: none;
-      margin-top: 30px;
+    .senha-container {
+      position: relative;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    .senha-container input {
+      width: 100%;
+      padding-right: 40px;
+    }
+    .senha-container span {
+      position: absolute;
+      right: 10px;
+      top: 12px;
+      cursor: pointer;
+      user-select: none;
+      color: #888;
     }
   </style>
 </head>
 <body>
   <h1>Bem-vindo(a) ao site da Angelica GMZ</h1>
-  <p>Para acessar o conteúdo, entre ou crie uma conta.</p>
+  <p>Crie uma conta ou entre para acessar o conteúdo exclusivo.</p>
 
-  <button onclick="mostrarLogin()">Continuar</button>
+  <input type="email" id="email" placeholder="Digite seu e-mail" />
 
-  <div id="login-area">
-    <input type="email" id="email" placeholder="Digite seu e-mail" />
+  <div class="senha-container">
     <input type="password" id="senha" placeholder="Digite sua senha" />
-
-    <button onclick="entrar()">Entrar</button>
-    <button onclick="criarConta()">Criar Conta</button>
+    <span onclick="toggleSenha()">👁️</span>
   </div>
+
+  <button onclick="entrar()">Entrar</button>
+  <button onclick="criarConta()">Criar Conta</button>
+
+  <p><a href="#" onclick="esqueciSenha()">Esqueci minha senha</a></p>
 
   <script type="module">
     import { supabase } from './supabaseClient.js';
 
-    function mostrarLogin() {
-      document.getElementById('login-area').style.display = 'block';
+    window.toggleSenha = function () {
+      const senhaInput = document.getElementById("senha");
+      senhaInput.type = senhaInput.type === "password" ? "text" : "password";
     }
 
-    window.mostrarLogin = mostrarLogin;
-
     window.entrar = async function () {
-      const email = document.getElementById('email').value;
-      const senha = document.getElementById('senha').value;
+      const email = document.getElementById("email").value;
+      const senha = document.getElementById("senha").value;
 
-      if (!email || !senha) return alert("Preencha os dois campos!");
+      if (!email || !senha) return alert("Preencha todos os campos!");
 
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
-        password: senha
+        password: senha,
       });
 
       if (error) {
@@ -91,14 +105,14 @@
     }
 
     window.criarConta = async function () {
-      const email = document.getElementById('email').value;
-      const senha = document.getElementById('senha').value;
+      const email = document.getElementById("email").value;
+      const senha = document.getElementById("senha").value;
 
-      if (!email || !senha) return alert("Preencha os dois campos!");
+      if (!email || !senha) return alert("Preencha todos os campos!");
 
       const { data, error } = await supabase.auth.signUp({
         email,
-        password: senha
+        password: senha,
       });
 
       if (error) {
@@ -107,6 +121,21 @@
         alert("Conta criada! Verifique seu e-mail.");
         localStorage.setItem("user", JSON.stringify(data.user));
         window.location.href = "home.html";
+      }
+    }
+
+    window.esqueciSenha = async function () {
+      const email = document.getElementById("email").value;
+      if (!email) return alert("Digite seu e-mail para redefinir a senha.");
+
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + "/index.html"
+      });
+
+      if (error) {
+        alert("Erro ao enviar o link: " + error.message);
+      } else {
+        alert("Enviamos um link de redefinição para seu e-mail.");
       }
     }
   </script>
